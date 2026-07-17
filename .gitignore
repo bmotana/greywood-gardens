@@ -22,3 +22,9 @@ Thumbs.db
 
 # Personal Notes
 next-three-steps.txt
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
