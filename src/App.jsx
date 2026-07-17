@@ -237,9 +237,13 @@ function App() {
               information when you choose to contact us, such as your name, email address, and message.
             </p>
             <p>
-              We use submitted information to reply to enquiries and do not sell personal information.
-              If analytics, advertising, newsletter, or embedded services are added later, this policy
-              should be updated before those services go live.
+              <strong>Cookies and Advertising:</strong> We use Google AdSense to show ads on our site. Google, as a third-party vendor, uses cookies to serve ads based on your prior visits to our website or other websites on the Internet.
+            </p>
+            <p>
+              Google's use of advertising cookies enables it and its partners to serve ads to our users based on their visit to our site and/or other sites on the Internet. You may opt out of personalized advertising by visiting <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>. Alternatively, you can opt out of a third-party vendor's use of cookies for personalized advertising by visiting <a href="https://www.aboutads.info" target="_blank" rel="noopener noreferrer">www.aboutads.info</a>.
+            </p>
+            <p>
+              We use submitted contact information to reply to enquiries and do not sell personal information.
             </p>
           </div>
         </div>
