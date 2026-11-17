@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Leaf, Sun, Droplets, Sprout, BookOpen, Mail, Menu, X } from 'lucide-react';
 import './App.css';
-import { featuredArticles } from './articles';
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [articles, setArticles] = useState([]);
+  const [articlesError, setArticlesError] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,6 +14,23 @@ function App() {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadArticles() {
+      try {
+        const response = await fetch('/api/articles', { signal: controller.signal });
+        if (!response.ok) throw new Error('Unable to load articles');
+        setArticles(await response.json());
+      } catch (error) {
+        if (error.name !== 'AbortError') setArticlesError(true);
+      }
+    }
+
+    loadArticles();
+    return () => controller.abort();
   }, []);
 
 
@@ -93,9 +111,9 @@ function App() {
           </div>
 
           <div className="articles-grid">
-            {featuredArticles.map((article, index) => (
+            {articles.map((article, index) => (
               <article
-                key={article.title}
+                key={article.id}
                 className="article-card"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
@@ -114,6 +132,9 @@ function App() {
               </article>
             ))}
           </div>
+          {articlesError && (
+            <p className="section-subtitle">Articles are temporarily unavailable. Please try again shortly.</p>
+          )}
         </div>
       </section>
 
@@ -149,8 +170,8 @@ function App() {
               <h2 className="section-title">About Greywood Gardens</h2>
               <p>
                 Welcome to Greywood Gardens, your trusted companion for practical gardening advice.
-                Whether you're tending to a sprawling backyard or nurturing plants on a windowsill,
-                we're here to help you grow with confidence.
+                Whether you&apos;re tending to a sprawling backyard or nurturing plants on a windowsill,
+                we&apos;re here to help you grow with confidence.
               </p>
               <p>
                 Our mission is simple: make gardening accessible, enjoyable, and rewarding for everyone.
@@ -187,7 +208,7 @@ function App() {
               <h2 className="section-title">Get in Touch</h2>
               <p>
                 Have a gardening question? Want to share your success story?
-                We'd love to hear from you!
+                We&apos;d love to hear from you!
               </p>
               <div className="contact-methods">
                 <div className="contact-method">
@@ -240,7 +261,7 @@ function App() {
               <strong>Cookies and Advertising:</strong> We use Google AdSense to show ads on our site. Google, as a third-party vendor, uses cookies to serve ads based on your prior visits to our website or other websites on the Internet.
             </p>
             <p>
-              Google's use of advertising cookies enables it and its partners to serve ads to our users based on their visit to our site and/or other sites on the Internet. You may opt out of personalized advertising by visiting <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>. Alternatively, you can opt out of a third-party vendor's use of cookies for personalized advertising by visiting <a href="https://www.aboutads.info" target="_blank" rel="noopener noreferrer">www.aboutads.info</a>.
+              Google&apos;s use of advertising cookies enables it and its partners to serve ads to our users based on their visit to our site and/or other sites on the Internet. You may opt out of personalized advertising by visiting <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>. Alternatively, you can opt out of a third-party vendor&apos;s use of cookies for personalized advertising by visiting <a href="https://www.aboutads.info" target="_blank" rel="noopener noreferrer">www.aboutads.info</a>.
             </p>
             <p>
               We use submitted contact information to reply to enquiries and do not sell personal information.
